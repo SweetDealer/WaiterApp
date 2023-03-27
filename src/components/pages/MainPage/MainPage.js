@@ -1,9 +1,13 @@
 import TableRow from '../../features/TableRow/TableRow';
-import { useSelector } from 'react-redux';
-import styles from './MainPage.module.css'
+import { useDispatch, useSelector } from 'react-redux';
+import styles from './MainPage.module.css';
+import { useEffect } from 'react';
+import { fetchTables } from '../../../redux/tablesRedux';
+
 
 const MainPage = () => {
     const tables = useSelector(state => {
+        console.log('state', state);
         return state.tables
     });
 

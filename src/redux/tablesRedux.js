@@ -12,14 +12,19 @@ export const fetchTables = () => {
     return (dispatch) => {
         fetch('http://localhost:3131/api/tables')
         .then(res => res.json())
-        .then(tables => dispatch(setTables(tables)));
+            .then(tables => {
+                console.log('fetch', tables);
+                return dispatch(setTables(tables))
+            });
     } 
 }; 
 
 const tablesReducer = (statePart = [], action) => {
+    console.log('action', action);
     switch (action.type) {
         case SET_TABLES:
-            return [...action.payload]
+            console.log('statePart', statePart);
+            return [...action.payload] 
         default:
             return statePart;
     };
