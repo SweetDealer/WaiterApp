@@ -1,0 +1,33 @@
+.TableRow {
+    display: flex;
+    list-style: none;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    border-bottom: 1px solid gray;
+}
+
+.TableNumber {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.TableStatus {
+font-weight: 700;
+font-size: 12px;
+}
+
+.Status {
+    font-weight: normal;
+}
+
+.TableRowButton {
+    background: rgb(95, 189, 248);
+    border-radius: 5px;
+    height: 36px;
+    border: 1px rgb(95, 189, 248);
+    color: white;
+    text-decoration: none;
+    line-height: 36px;
+    padding: 0 12px;
+}
