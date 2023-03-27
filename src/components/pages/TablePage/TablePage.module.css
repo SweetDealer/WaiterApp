@@ -1,0 +1,40 @@
+.tablePage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+}
+
+.tablePageProperty {
+    display: flex;
+    width: 300px;
+    justify-content: space-between;
+    height: 36px;
+}
+
+.peopleAmount {
+width: 18px;
+height: 18px;
+}
+
+.bill {
+width: 54px;
+height: 18px;
+} 
+
+.status {
+    height: 24px;
+    padding: 2px 5px;
+}
+
+.button {
+    background: rgb(95, 189, 248);
+    border-radius: 5px;
+    height: 36px;
+    border: 1px rgb(95, 189, 248);
+    color: white;
+    text-decoration: none;
+    line-height: 36px;
+    padding: 0 12px;
+}

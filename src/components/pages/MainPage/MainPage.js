@@ -9,7 +9,7 @@ const MainPage = () => {
 
     console.log(tables);
     return <div>
-        <h1 className={styles.title}>All                tables</h1>
+        <h1 className={styles.title}>All      tables</h1>
         <ul className={styles.TableList}>
             {tables.map(table => <TableRow key={table.id} id={table.id} status={table.status} />) }
         </ul>
