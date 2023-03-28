@@ -1,5 +1,7 @@
 //selectors
-export const getTableById = ({ tables }, tableId) => tables.find(table => table.id === tableId);
+export const getTableById = ({ tables }, tableId) => {
+    return tables.find(table => table.id === tableId)
+};
 
 // actions
 const createActionName = actionName => `app/tables/${actionName}`;
@@ -13,17 +15,32 @@ export const fetchTables = () => {
         fetch('http://localhost:3131/api/tables')
         .then(res => res.json())
             .then(tables => {
-                console.log('fetch', tables);
                 return dispatch(setTables(tables))
             });
     } 
 }; 
 
+export const changeTableData = (newTableData) => {
+    return () => {
+        const options = {
+            method: 'PATCH',
+
+            headers: {
+                'Content-Type': 'application/json'
+            },
+
+            body: JSON.stringify(
+                newTableData
+            )
+        };
+
+        fetch(`http://localhost:3131/tables/${newTableData.id}`, options)
+    }
+}
+
 const tablesReducer = (statePart = [], action) => {
-    console.log('action', action);
     switch (action.type) {
         case SET_TABLES:
-            console.log('statePart', statePart);
             return [...action.payload] 
         default:
             return statePart;

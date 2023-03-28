@@ -18,6 +18,10 @@ width: 18px;
 height: 18px;
 }
 
+.slash {
+    padding: 0 3px;
+}
+
 .bill {
 width: 54px;
 height: 18px;

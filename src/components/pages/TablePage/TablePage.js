@@ -1,20 +1,36 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getTableById } from "../../../redux/tablesRedux";
+import { changeTableData, fetchTables, getTableById } from "../../../redux/tablesRedux";
+import { useEffect } from 'react';
 import styles from './TablePage.module.css'
 
 const TablePage = () => {
-    const { tableId } = useParams();
-    const tableData = useSelector(state => getTableById(state, tableId))
-    console.log(tableData);
+    const dispatch = useDispatch();
 
-    const change = event => {
-        console.log(event.target.value);
+    const { tableId } = useParams();
+
+    const tableData = useSelector(state => getTableById(state, tableId))
+    if (!tableData) {
+        return '';
     }
+    const newTableData = { id: tableId }
+
+    const change = e => {
+        const name = e.target.name;
+        const value = e.target.value;
+        newTableData[name] = value;
+        console.log(newTableData);
+    }
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        dispatch(changeTableData(newTableData))
+    }
+
     return <div className={styles.tablePage}><h2 className={styles.title}>Table {tableData.id}</h2>
-        <form>
+        <form onSubmit={handleSubmit}>
             <label className={styles.tablePageProperty}>Status:
-                <select name="status" value={tableData.status} className={styles.status}>
+                <select name="status" onChange={change} defaultValue={tableData.status} className={styles.status}>
                     <option value="Free">Free</option>
                     <option value="Reserved">Reserved</option>
                     <option value="Busy">Busy</option>
@@ -22,10 +38,14 @@ const TablePage = () => {
                 </select>
             </label>
             <label className={styles.tablePageProperty}>People:
-                <div><input className={styles.peopleAmount} onChange={change} value={tableData.peopleAmount}></input> / <input className={styles.peopleAmount} value={tableData.maxPeopleAmount}></input></div>
+                <div>
+                    <input name="peopleAmount" className={styles.peopleAmount} onChange={change} defaultValue={tableData.peopleAmount}></input>
+                    <span className={styles.slash}>/</span>
+                    <input name="maxPeopleAmount" onChange={change} className={styles.peopleAmount} defaultValue={tableData.maxPeopleAmount}></input>
+                </div>
             </label>
             <label className={styles.tablePageProperty}>Bill ($):
-                <input className={styles.bill} value={tableData.bill}></input> 
+                <input name="bill" onChange={change} className={styles.bill} defaultValue={tableData.bill}></input>
             </label>
             <button className={styles.button}>Update</button>
         </form></div>
