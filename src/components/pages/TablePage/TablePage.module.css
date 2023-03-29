@@ -18,6 +18,13 @@ width: 18px;
 height: 18px;
 }
 
+.peopleAmount::-webkit-outer-spin-button,
+.peopleAmount::-webkit-inner-spin-button,
+.bill::-webkit-outer-spin-button,
+.bill::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
 .slash {
     padding: 0 3px;
 }
@@ -41,4 +48,12 @@ height: 18px;
     text-decoration: none;
     line-height: 36px;
     padding: 0 12px;
+}
+
+.error {
+    display: flex;
+    color: red;
+    font-size: 6px;
+    height: 28px;
+    line-height: 1;
 }
