@@ -1,36 +1,43 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { changeTableData, getTableById } from "../../../redux/tablesRedux";
 import styles from './TablePage.module.css'
 
 const TablePage = () => {
     const dispatch = useDispatch();
-
+    const navigate = useNavigate();
     const { tableId } = useParams();
 
-    const tableData = useSelector(state => getTableById(state, tableId))
+    const tableData = useSelector(state => getTableById(state, tableId));
+    
     if (!tableData) {
-        return '';
+        return ''  
     }
 
     const newTableData = { id: tableId };
+    const selector = {
+        status: document.querySelector('select[name="status"]'),
+        peopleAmount: document.querySelector('input[name="peopleAmount"]'),
+        maxPeopleAmount: document.querySelector('input[name="maxPeopleAmount"]'),
+        bill: document.querySelector('input[name="bill"]'),
+    }
 
     const change = e => {
         const name = e.target.name;
         const value = e.target.type === "number" ? e.target.valueAsNumber : e.target.value;
         newTableData[name] = value;
-        console.log(newTableData);
     }
 
     const handleSubmit = e => {
         e.preventDefault();
-        dispatch(changeTableData(newTableData))
+        dispatch(changeTableData(newTableData));
+        navigate('/');
     }
 
     const changeStatus = e => {
-        document.querySelector('input[name="bill"]').value = 0;
+        selector.bill.value = 0;
         newTableData.bill = 0;
-        document.querySelector('input[name="bill"]').toggleAttribute('disabled', e.target.value != "Busy");
+        selector.bill.toggleAttribute('disabled', e.target.value != "Busy");
         change(e);
     }
 
@@ -39,7 +46,7 @@ const TablePage = () => {
         const value = input.valueAsNumber;
         input.setCustomValidity('');
         if ((0 <= value) && (value <= 10)) {
-            if (value <= document.querySelector('input[name="maxPeopleAmount"]').valueAsNumber) {
+            if (value <= selector.maxPeopleAmount.valueAsNumber) {
                 change(e);
             }
             else {
@@ -50,7 +57,6 @@ const TablePage = () => {
             input.setCustomValidity('Value of "People Amount" must be less than or equal 10');
             input.reportValidity();
         }
-
     }
 
     const changeMaxPeopleAmount = e => {
@@ -58,8 +64,8 @@ const TablePage = () => {
         const value = input.valueAsNumber;
         input.setCustomValidity('');
         if ((0 <= value) && (value <= 10)) {
-            if (value > document.querySelector('input[name="peopleAmount"]').valueAsNumber) {
-                document.querySelector('input[name="peopleAmount"]').value = value
+            if (value > selector.peopleAmount.valueAsNumber) {
+                selector.peopleAmount.value = value
                 change(e)
             }
         }
@@ -102,7 +108,6 @@ const TablePage = () => {
             <label className={styles.tablePageProperty}>Bill ($):
                     <input name="bill" type="number" step="any" min="1" onChange={changeBill} className={styles.bill} defaultValue={tableData.bill} disabled={tableData.status !== "Busy"} ></input>
             </label>
-            <div name="error" className={styles.error}></div>
             <button className={styles.button}>Update</button>
         </form></div>
 }

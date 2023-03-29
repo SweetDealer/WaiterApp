@@ -41,19 +41,11 @@ height: 18px;
 
 .button {
     background: rgb(95, 189, 248);
-    border-radius: 5px;
-    height: 36px;
     border: 1px rgb(95, 189, 248);
     color: white;
     text-decoration: none;
+    border-radius: 5px;
+    height: 36px;
     line-height: 36px;
     padding: 0 12px;
-}
-
-.error {
-    display: flex;
-    color: red;
-    font-size: 6px;
-    height: 28px;
-    line-height: 1;
 }
