@@ -9,6 +9,8 @@ const SET_TABLES = createActionName('SET_TABLES');
 
 // action creators
 export const setTables = payload => ({ type: SET_TABLES, payload });
+const url = '//' + window.location.hostname + (window.location.hostname == 'localhost' ? ':3131' : '');
+
 
 export const fetchTables = () => {
     return (dispatch) => {
@@ -34,7 +36,7 @@ export const changeTableData = (newTableData) => {
             )
         };
 
-        fetch(`http://localhost:3131/tables/${newTableData.id}`, options)
+        fetch(`http:${url}/tables/${newTableData.id}`, options)
     }
 }
 
