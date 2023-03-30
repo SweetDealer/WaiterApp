@@ -1,3 +1,5 @@
+import { API_URL } from "../config";
+
 //selectors
 export const getTableById = ({ tables }, tableId) => {
     return tables.find(table => table.id === tableId)
@@ -9,12 +11,10 @@ const SET_TABLES = createActionName('SET_TABLES');
 
 // action creators
 export const setTables = payload => ({ type: SET_TABLES, payload });
-const url = '//' + window.location.hostname + (window.location.hostname == 'localhost' ? ':3131' : '');
-
 
 export const fetchTables = () => {
     return (dispatch) => {
-        fetch('http://localhost:3131/api/tables')
+        fetch(`${API_URL}/tables`)
         .then(res => res.json())
             .then(tables => {
                 return dispatch(setTables(tables))
@@ -36,7 +36,7 @@ export const changeTableData = (newTableData) => {
             )
         };
 
-        fetch(`http:${url}/tables/${newTableData.id}`, options)
+        fetch(`${API_URL}/tables/${newTableData.id}`, options)
     }
 }
 
