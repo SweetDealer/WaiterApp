@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { changeTableData, getTableById } from "../../../redux/tablesRedux";
+import NotFound from './../NotFound/NotFound'
 import styles from './TablePage.module.css'
 
 const TablePage = () => {
@@ -11,14 +12,23 @@ const TablePage = () => {
 
     const tableData = useSelector(state => getTableById(state, tableId));
 
-    const [status, setStatus] = useState(tableData?.state);
+    const [status, setStatus] = useState(tableData?.status);
     const [peopleAmount, setPeopleAmount] = useState(tableData?.peopleAmount);
     const [maxPeopleAmount, setMaxPeopleAmount] = useState(tableData?.maxPeopleAmount)
     const [bill, setBill] = useState(tableData?.bill)
 
+    useEffect(() => {
+        if (tableData) {
+            setStatus(tableData.status);
+            setPeopleAmount(tableData.peopleAmount);
+            setMaxPeopleAmount(tableData.maxPeopleAmount);
+            setBill(tableData.bill);
+        }
+    }, [tableData])
+
     if (!tableData) {
         console.log(tableData);
-        return null;
+        return <NotFound />;
     }
 
     const handleSubmit = e => {
